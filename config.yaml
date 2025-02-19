@@ -1,8 +1,8 @@
 browser:
   language: en  # Replace with your desired language code
-  visible: false  # Set to true to show the browser window
+  visible: true  # Set to true to show the browser window
   geolocation: US  # Replace with your country code
-  proxy: ""  # Add your proxy here
+  proxy: "http://neon005lite:7eL62fXNTN@103.172.85.3:59100"  # Add your proxy here
 
 search:
   type: desktop  # Set to "desktop", "mobile", or "both"
