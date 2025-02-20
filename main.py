@@ -1,3 +1,5 @@
+# main.py
+
 import logging
 import sys
 import traceback
@@ -46,10 +48,24 @@ def bypass_cloudflare(driver):
 def open_url_in_chrome(driver, url, duration):
     logging.info('Opening the URL in Chrome...')
     driver.get(url)
-    # Keep the browser open for the specified duration
+    # Wait for 1 minute before interacting with the page
+    time.sleep(60)
+    logging.info('Clicking the center of the page...')
+    driver.execute_script("document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2).click();")
+    time.sleep(20)  # Wait for 20 seconds before closing the new tab
+    logging.info('Closing the new tab...')
+    driver.switch_to.window(driver.window_handles[1])
+    driver.close()
+    driver.switch_to.window(driver.window_handles[0])
+    logging.info('Scrolling the page...')
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(5)
+    driver.execute_script("window.scrollTo(0, 0);")
+    time.sleep(5)
+    logging.info('Playing the video on the page...')
+    driver.execute_script("document.querySelector('video').play();")
     logging.info(f'Keeping the browser open for {duration} seconds.')
     time.sleep(duration * 60)  # Convert minutes to seconds
-    # You can add more interactions here if needed
 
 def main():
     setupLogging()
@@ -82,7 +98,7 @@ def main():
         driver.get(url)
         bypass_cloudflare(driver)
         
-        # Continue using the same browser instance to open the URL
+        # Continue using the same browser instance to open the URL and interact with the page
         logging.info("Cloudflare bypass successful. Opening the URL in Chrome...")
         open_url_in_chrome(driver, url, duration)
         
