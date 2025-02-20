@@ -7,7 +7,7 @@ browser:
 search:
   type: desktop  # Set to "desktop", "mobile", or "both"
 
-url: "https://streama2z.xyz/n4k1lc9ulzs3"  # Replace with your desired URL
+url: "https://www.diskwala.com/app/679da434b822b800042f7f5d"  # Replace with your desired URL
 duration: 5  # Duration in minutes to visit the URL
 
 discord_webhook_url: "discord://1249221380491186276/6d2llfGXypQ7hsCBzaiZq4rX7LirwK98X6vRrewv8_NyQ9ypujss4Tj0ysCgJVzXpSH1"  # Add your Discord webhook URL here
