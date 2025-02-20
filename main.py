@@ -43,15 +43,19 @@ def bypass_cloudflare(driver):
     cf_bypasser.bypass()
     logging.info("Cloudflare bypass completed.")
 
-def open_url_in_chrome(driver, url):
+def open_url_in_chrome(driver, url, duration):
     logging.info('Opening the URL in Chrome...')
     driver.get(url)
+    # Keep the browser open for the specified duration
+    logging.info(f'Keeping the browser open for {duration} seconds.')
+    time.sleep(duration * 60)  # Convert minutes to seconds
     # You can add more interactions here if needed
 
 def main():
     setupLogging()
 
     url = CONFIG['url']
+    duration = CONFIG['duration']
 
     try:
         browser_path = os.getenv('CHROME_PATH', "/usr/bin/google-chrome")
@@ -80,10 +84,7 @@ def main():
         
         # Continue using the same browser instance to open the URL
         logging.info("Cloudflare bypass successful. Opening the URL in Chrome...")
-        open_url_in_chrome(driver, url)
-
-        # Sleep for a while to let the user see the result if needed
-        time.sleep(5)
+        open_url_in_chrome(driver, url, duration)
         
     except Exception as e:
         logging.exception("")
