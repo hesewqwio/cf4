@@ -18,24 +18,16 @@ def setupLogging():
     logs_directory = getProjectRoot() / "logs"
     logs_directory.mkdir(parents=True, exist_ok=True)
 
-    logging.config.dictConfig(
-        {
-            "version": 1,
-            "disable_existing_loggers": True,
-        }
-    )
+    fileHandler = logging.FileHandler(logs_directory / "activity.log", encoding="utf-8")
+    fileHandler.setFormatter(logging.Formatter(_format))
+    fileHandler.setLevel(logging.getLevelName(_level.upper()))
+
     logging.basicConfig(
         level=logging.getLevelName(_level.upper()),
         format=_format,
         handlers=[
-            handlers.TimedRotatingFileHandler(
-                logs_directory / "activity.log",
-                when="midnight",
-                interval=1,
-                backupCount=2,
-                encoding="utf-8",
-            ),
             terminalHandler,
+            fileHandler,
         ],
     )
 
