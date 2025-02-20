@@ -2,12 +2,12 @@ browser:
   language: en  # Replace with your desired language code
   visible: true  # Set to true to show the browser window
   geolocation: US  # Replace with your country code
-  proxy: "http://neon005lite:7eL62fXNTN@103.172.85.3:59100"  # Add your proxy here
+  proxy: ""  # Add your proxy here
 
 search:
   type: desktop  # Set to "desktop", "mobile", or "both"
 
-url: "https://www.effectiveratecpm.com/xdaf0bsq4?key=a78a9a2f59016d594e4774f295dca5b5"  # Replace with your desired URL
+url: "https://streama2z.xyz/n4k1lc9ulzs3"  # Replace with your desired URL
 duration: 5  # Duration in minutes to visit the URL
 
 discord_webhook_url: "discord://1249221380491186276/6d2llfGXypQ7hsCBzaiZq4rX7LirwK98X6vRrewv8_NyQ9ypujss4Tj0ysCgJVzXpSH1"  # Add your Discord webhook URL here
