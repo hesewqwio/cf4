@@ -5,7 +5,6 @@ import time
 import os
 
 from DrissionPage import ChromiumPage, ChromiumOptions
-from src import Browser, Searches
 from src.utils import CONFIG, sendNotification, getProjectRoot
 from src.CloudflareBypasser import CloudflareBypasser
 
@@ -44,10 +43,17 @@ def bypass_cloudflare(driver):
     cf_bypasser.bypass()
     logging.info("Cloudflare bypass completed.")
 
-def perform_searches(mobile):
-    with Browser(mobile=mobile) as browser:
-        searches = Searches(browser=browser)
-        searches.performSearch(CONFIG['url'], CONFIG['duration'])
+def open_url_in_chrome(driver, url):
+    logging.info('Opening the URL in Chrome...')
+    driver.get(url)
+    # You can add more interactions here if needed
+
+def main():
+    setupLogging()
+
+    url = CONFIG['url']
+
+    try:
         browser_path = os.getenv('CHROME_PATH', "/usr/bin/google-chrome")
         arguments = [
             "-no-first-run",
@@ -65,28 +71,26 @@ def perform_searches(mobile):
             "-accept-lang=en-US",
         ]
         options = get_chromium_options(browser_path, arguments)
+
+        # Initialize the browser and bypass Cloudflare
         driver = ChromiumPage(addr_or_opts=options)
-        driver.get(CONFIG['url'])
+        logging.info("Bypassing Cloudflare for the URL...")
+        driver.get(url)
         bypass_cloudflare(driver)
-        driver.quit()
+        
+        # Continue using the same browser instance to open the URL
+        logging.info("Cloudflare bypass successful. Opening the URL in Chrome...")
+        open_url_in_chrome(driver, url)
 
-def main():
-    setupLogging()
-
-    search_type = CONFIG['search']['type']
-
-    try:
-        if search_type in ("desktop", "both"):
-            logging.info("Performing desktop searches...")
-            perform_searches(mobile=False)
-
-        if search_type in ("mobile", "both"):
-            logging.info("Performing mobile searches...")
-            perform_searches(mobile=True)
-
+        # Sleep for a while to let the user see the result if needed
+        time.sleep(5)
+        
     except Exception as e:
         logging.exception("")
         sendNotification("⚠️ Error occurred, please check the log", traceback.format_exc(), e)
+    finally:
+        logging.info('Closing the browser.')
+        driver.quit()
 
 if __name__ == "__main__":
     try:
